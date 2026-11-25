@@ -1,7 +1,8 @@
 veredicto: GO|NO-GO · juez: <identidad/familia> · head: <sha40|sha256:64hex>
-cierra: <referencia-veredicto-previo-si-aplica-omitir-si-es-primera-ronda>
 
 # Informe de Validación Ciega
+
+> **Nota sobre la línea 2 (`cierra:`):** dejar la línea 2 en blanco por defecto en primeras rondas para evitar placeholders residuales. Insertar `cierra: <referencia-veredicto-previo>` en la línea 2 **únicamente** cuando este veredicto levante o cierre un `NO-GO` anterior.
 
 - **Item:** `<referencia-del-item>`
 - **Nivel de riesgo:** `BAJO` | `MEDIO` | `ALTO` | `MUY ALTO`

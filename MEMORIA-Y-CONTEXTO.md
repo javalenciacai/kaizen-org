@@ -16,7 +16,7 @@ Capa 4 · Memoria Destilada        (MEMORY.md + memory/<tema>.md)         → Qu
 ## Capa 1 · Manual Corporativo (Fuente normativa)
 
 - **Ubicación:** repositorio `kaizen-org` (`<PROJECTS_ROOT>/kaizen-org`) y documentación técnica dentro de cada repositorio de producto (`README.md`, arquitectura, guías de pruebas).
-- **Contenido:** [CONSTITUCION.md](CONSTITUCION.md), [ROLES.md](ROLES.md), [FLUJO-Y-COMPUERTAS.md](FLUJO-Y-COMPUERTAS.md), [KAIZEN.md](KAIZEN.md), [plantillas/](plantillas/brief.md) y registros de decisión en [decisiones/INDICE.md](decisiones/INDICE.md).
+- **Contenido:** [CONSTITUCION.md](CONSTITUCION.md), [ROLES.md](ROLES.md), [FLUJO-Y-COMPUERTAS.md](FLUJO-Y-COMPUERTAS.md), [KAIZEN.md](KAIZEN.md), [MATRIZ-AUTONOMIA.md](MATRIZ-AUTONOMIA.md), contratos operativos ([plantillas/brief.md](plantillas/brief.md), [plantillas/acta-entrega.md](plantillas/acta-entrega.md) y [plantillas/relevo.md](plantillas/relevo.md)) y registros de decisión en [decisiones/INDICE.md](decisiones/INDICE.md).
 - **Regla de lectura:** [CONSTITUCION.md](CONSTITUCION.md) es el único documento de recarga universal rápida (<1 página). El resto del manual se consulta bajo demanda según la fase o el problema.
 - **Cambio controlado:** evoluciona únicamente mediante commits revisados con validación independiente; nunca por acuerdos informales en un chat.
 

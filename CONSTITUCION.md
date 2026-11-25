@@ -13,7 +13,7 @@ Reglas invariantes de recarga rápida para todo rol, bot o worker que opere dent
 
 ### 2. Determinista primero
 - Lo verificable por script, prueba automatizada, linter, compilador o salida JSON estructurada jamás se delega a la opinión libre de un modelo de lenguaje.
-- Lo resoluble por agentes dentro de su umbral autorizado en [matriz-autonomia.md](perfiles-propuestos/matriz-autonomia.md) jamás interrumpe al humano.
+- Lo resoluble por agentes dentro de su umbral autorizado en [MATRIZ-AUTONOMIA.md](MATRIZ-AUTONOMIA.md) jamás interrumpe al humano.
 
 ### 3. El humano entra según el riesgo (`BAJO | MEDIO | ALTO | MUY ALTO`)
 - Toda operación se clasifica en uno de los cuatro niveles canónicos: `BAJO`, `MEDIO`, `ALTO` o `MUY ALTO`.
@@ -61,4 +61,4 @@ Reglas invariantes de recarga rápida para todo rol, bot o worker que opere dent
 - Carriles, validación ciega y merge seguro: [FLUJO-Y-COMPUERTAS.md](FLUJO-Y-COMPUERTAS.md)
 - Mejora continua por excepción: [KAIZEN.md](KAIZEN.md)
 - Decisiones de arquitectura: [decisiones/INDICE.md](decisiones/INDICE.md)
-- Autonomía y firmas requeridas: [perfiles-propuestos/matriz-autonomia.md](perfiles-propuestos/matriz-autonomia.md)
+- Autonomía y firmas requeridas: [MATRIZ-AUTONOMIA.md](MATRIZ-AUTONOMIA.md)

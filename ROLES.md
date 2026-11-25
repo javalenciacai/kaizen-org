@@ -1,6 +1,6 @@
 # Roles y Organigrama de kaizen-org
 
-`kaizen-org` adopta un organigrama sobrio de **3 capas escalables** sobre Orca nativo. Cada capa tiene frontera clara de responsabilidad, horizonte de contexto y autoridad de decisión conforme a [perfiles-propuestos/matriz-autonomia.md](perfiles-propuestos/matriz-autonomia.md).
+`kaizen-org` adopta un organigrama sobrio de **3 capas escalables** sobre Orca nativo. Cada capa tiene frontera clara de responsabilidad, horizonte de contexto y autoridad de decisión conforme a [MATRIZ-AUTONOMIA.md](MATRIZ-AUTONOMIA.md).
 
 ## Organigrama de 3 capas
 

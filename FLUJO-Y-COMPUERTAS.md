@@ -9,7 +9,7 @@ Todo encargo recibe un nivel de riesgo explícito antes de despacharse. Si un ca
 | Nivel | Criterio y ejemplos concretos | Validación mínima | Autorización de cierre / integración |
 | :--- | :--- | :--- | :--- |
 | **`BAJO`** | Documentación interna, correcciones tipográficas, ajustes acotados en scripts/tests sin cambiar contratos ni datos. | Checks deterministas + 1 validación ciega independiente. | Subdirector responsable (conforme a Matriz de Autonomía). |
-| **`MEDIO`** | Nueva funcionalidad acotada en 1 repo, refactor localizado, ajuste de plantillas/workflows o bugfix con impacto funcional controlado. | Checks deterministas + 1 validación ciega independiente sobre `head` exacto. | Subdirector responsable (local/interno pre-aprobado tras confirmación del Owner en Matriz). |
+| **`MEDIO`** | Nueva funcionalidad acotada en 1 repo, refactor localizado, ajuste de plantillas/workflows o bugfix con impacto funcional controlado. | Checks deterministas + 1 validación ciega independiente sobre `head` exacto. | Subdirector responsable (Bloque B activo conforme a [MATRIZ-AUTONOMIA.md](MATRIZ-AUTONOMIA.md)). |
 | **`ALTO`** | Cambios multi-repo, contratos públicos/API, seguridad, migraciones reversibles, automatizaciones críticas o cambios de gobernanza. | Checks deterministas + validación ciega reforzada (1 validador fuerte independiente + especialista `Pull request review`). | Subdirección + conocimiento de Dirección; escalamiento al Owner si hay excepción o disenso. |
 | **`MUY ALTO`** | Operaciones destructivas o irreversibles, producción crítica, creación de repos remotos/visibilidad, cambios en `SOUL.md` reales, creación/retiro de bots permanentes, credenciales o infra crítica. | Checks deterministas + validación ciega reforzada + plan de reversión o contingencia explícito. | **Aprobación explícita obligatoria del Owner** (`Needs you`). |
 
@@ -72,7 +72,7 @@ Reglas asociadas:
 Un entregable solo puede integrarse cuando se cumplen **simultáneamente** las 4 condiciones:
 1. Checks deterministas en verde sobre el `head` exacto.
 2. Veredicto canónico `GO` vigente emitido por un juez distinto al autor sobre ese mismo `head`.
-3. Permiso vigente según [perfiles-propuestos/matriz-autonomia.md](perfiles-propuestos/matriz-autonomia.md) (incluyendo aprobación del Owner si es `MUY ALTO`).
+3. Permiso vigente según [MATRIZ-AUTONOMIA.md](MATRIZ-AUTONOMIA.md) (incluyendo aprobación del Owner si es Bloque C / `MUY ALTO`).
 4. Árbol destino limpio y verificación exacta del commit al integrar:
    - En integración local: `git merge --ff-only <sha40>` (o rebase/fast-forward verificado con re-validación si cambia el SHA).
    - En Pull Request remoto: `gh pr merge --match-head-commit <sha40>` (nunca mergear un PR sin fijar el SHA exacto auditado).

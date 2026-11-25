@@ -5,3 +5,4 @@ Registro cronológico de las decisiones estructurales que gobiernan `kaizen-org`
 | ID | Fecha | Estado | Título | Resumen |
 | :---: | :---: | :---: | :--- | :--- |
 | [0001](0001-fundacion-kaizen-org.md) | 2026-11-24 | Aceptada | Fundación de `kaizen-org` sobre Orca nativo | Define la identidad `kaizen-org`, el organigrama de 3 capas, la herencia metodológica de `ai-factory-method` v0.6.0, los descartes de raíz y el plan por Fases 1, 2 y 3. |
+| [0002](0002-activacion-perfiles-bloque-b-y-fase2.md) | 2026-11-25 | Aceptada | Activación de perfiles directivos, Bloque B, publicación pública e inicio de Fase 2 | Ratifica los `SOUL.md` de Dirección y Subdirección, promueve `MATRIZ-AUTONOMIA.md` con Bloque B activo (Bloque C intacto), habilita publicación pública, añade `scripts/check_kaizen.py` y abre propuestas Fase 2 de especialistas. |

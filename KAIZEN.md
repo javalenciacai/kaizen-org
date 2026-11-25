@@ -54,3 +54,12 @@ El Ciclo de Gobierno Kaizen **no se dispara por calendario ciego**, sino únicam
 3. **Criterio explícito de verificación:** cada mejora aprobada define cómo se comprobará en las **3 entregas siguientes** que la fricción dejó de repetirse.
 4. **Regla anti-bucle (convergencia obligatoria):** está prohibido re-emitir diagnósticos previos sin haber cerrado, medido o descartado formalmente la acción anterior asociada a esa misma causa raíz.
 5. **Aprobación cuando toque gobernanza:** si una mejora implica modificar un `SOUL.md` real, crear/retirar un bot o cambiar permisos `MUY ALTO`, se presenta como propuesta al Owner vía `Needs you`.
+
+---
+
+## Reglas técnicas institucionalizadas (Micro-retrospectiva Fase 1 → v0.2)
+
+Las siguientes reglas nacen de fricciones reales verificadas en el cierre de Fase 1 ([decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md](decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md)) y son de aplicación obligatoria en `local` y `windows-local`:
+
+1. **Bootstrap Git compatible con Git <2.28:** inicializar repositorios nuevos con `git init && git symbolic-ref HEAD refs/heads/main` (en lugar de `git init -b main`) para garantizar compatibilidad en nodos con versiones antiguas de Git.
+2. **Auditoría determinista de frontera sobre `git ls-files` + `git log`:** toda verificación automática de higiene (`UTF-8` + `LF`), integridad documental y frontera de publicación pública opera **exclusivamente** sobre `git ls-files` y `git log` —nunca recorriendo `.git` con `os.walk` ni dependiendo de `/proc` o módulos exclusivos de POSIX como `pwd`—. El verificador estándar de referencia es [scripts/check_kaizen.py](scripts/check_kaizen.py) (`python3 scripts/check_kaizen.py`).

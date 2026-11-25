@@ -42,6 +42,8 @@ Capa 1 · C-Level (Dirección)
 - Redactan contratos de entrada claros ([plantillas/brief.md](plantillas/brief.md)) y despachan workers efímeros o especialistas transversales.
 - Garantizan la compuerta *"quien produce no valida"*, orquestan validación ciega independiente sobre el `head` exacto y resuelven bloqueos técnicos o relevos por cuota.
 - Integran cambios autorizados (merge seguro sin roles artificiales), cierran Items con micro-retrospectiva Kaizen y reportan resultados consolidados a `bot:Director General`.
+- **Frontera de mensajería en salas grupales:** desde una sesión de sala grupal compartida (`C-Level`), Orca restringe `orca orchestration send --to bot:<nombre>` exclusivamente a miembros actuales de esa sala; cuando Subdirección deba mensajear directamente bots especialistas fuera de `C-Level`, la coordinación se ejecuta desde su Home Chat standalone (o sala operativa dedicada).
+- **Despacho de workers remotos (`--on <host>`):** al despachar workers remotos con `orca orchestration worker-start --on <host>`, se omite `--item <n>` (y `--environment`) en el comando de arranque y se enlaza inmediatamente el `dispatch` devuelto en el nodo coordinador con `orca bot item link <n> dispatch:<id>`.
 - **Restricción estricta:** el Subdirector coordina y verifica evidencias; no lee ni edita código directamente salvo inspección mínima de metadatos/evidencias de cierre.
 
 ---
@@ -54,15 +56,18 @@ Bots persistentes especializados en capacidades compartidas por toda la organiza
 | :--- | :--- | :--- | :--- |
 | **`Infra VM-Oracle`** | `local` (Linux) | Salud del nodo Linux, disponibilidad de herramientas CLI, runtime de Orca, diagnóstico de dependencias y telemetría local. | No modifica repos de producto ni despliega cambios `MUY ALTO` sin autorización. |
 | **`Infra Local Windows`** | `windows-local` (Windows) | Salud del nodo Windows, compatibilidad de herramientas **sin dependencias POSIX `/proc`**, cumplimiento de fin de línea `LF` y estabilidad del runtime Orca en Windows. | Reporta divergencias multiplataforma y no altera código de negocio sin encargo. |
-| **`Pull request review`** | `local` / multi-repo | Auditoría ciega de PRs, análisis de riesgos de contrato/seguridad, validación de checks estáticos y emisión de veredictos con Línea Canónica. | Nunca aprueba código producido por sí mismo ni asume contexto no presente en el diff + brief. |
-| **`Workspace cleanup`** | `local` y `windows-local` | Higiene orientada a eventos de ramas locales y worktrees huérfanos o cerrados tras fusiones y cierres de Items. | Solo limpia cuando se cumplen **simultáneamente las 4 salvaguardas estrictas** detalladas abajo. |
+| **`Pull request review`** | `local` / multi-repo | Auditoría ciega de PRs, análisis de riesgos de contrato/seguridad, validación de checks estáticos y emisión de veredictos con Línea Canónica en GitHub y Azure DevOps. | Nunca aprueba código producido por sí mismo ni asume contexto no presente en el diff + brief. |
+| **`Workspace cleanup`** | `local` y `windows-local` | Higiene orientada a eventos de ramas locales y worktrees huérfanos o cerrados tras fusiones y cierres de Items (`local` y `windows-local`). | Solo limpia cuando se cumplen **simultáneamente las 4 salvaguardas estrictas** detalladas abajo. |
 
 ### Las 4 salvaguardas estrictas de `Workspace cleanup`
 `Workspace cleanup` nunca ejecuta borrados masivos ciegos ni cron destructivo. Un worktree o rama es elegible para limpieza **únicamente** si se verifican de forma determinista las 4 condiciones:
-1. **Rama mergeada en remoto/base:** el `head` de la rama ya está contenido en la rama base o remoto objetivo.
+1. **Rama mergeada en remoto/base:** el `head` de la rama ya está contenido en la rama base o remoto objetivo con PR cerrado o mergeado.
 2. **Sin PR abierto:** no existe ningún Pull Request abierto asociado a esa rama.
 3. **Sin Item activo vinculado:** ningún Item de Orca en estado `in-progress`, `waiting` o `needs-you` referencia esa rama o worktree.
-4. **Árbol limpio y sin agente vivo:** `git status --porcelain` está vacío (sin cambios sin commitear ni untracked relevantes) y no hay ningún proceso de worker/agente activo ejecutándose en ese worktree.
+4. **Árbol limpio y sin agente vivo:** `git status --porcelain` está vacío (sin cambios sin commitear ni untracked relevantes), `0` commits sin push y no hay ningún proceso de worker/agente activo o `idle` ejecutándose en ese worktree.
+
+#### Política de artefactos efímeros descartables (`.atl/`)
+Carpetas efímeras no versionadas generadas por herramientas de sesión (`.atl/`) pueden descartarse en una limpieza supervisada **únicamente** cuando se cumplan de forma verificada las demás condiciones: rama integrada en su rama base con PR cerrado/mergeado, `0` cambios locales fuera de `.atl/`, `0` commits sin push, `0` agentes abiertos o `idle` y `0` Items activos (además de verificar que el worktree no sea un checkout canónico de lectura de una automatización vigente).
 
 ---
 

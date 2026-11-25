@@ -98,3 +98,19 @@ Ningún frente puede quedar congelado por un empate técnico o por indisponibili
 3. **Resolución vinculante:**
    - En riesgo `BAJO`, `MEDIO` y `ALTO`: decide el Subdirector responsable o un tercer validador independiente designado por Subdirección, dejando justificación verificable en el Item.
    - En riesgo `MUY ALTO`: se escala al Owner vía `Needs you` (≤5 líneas de contexto, pregunta clara y opciones con recomendación).
+
+---
+
+## 6. Reglas de orquestación, mensajería y limpieza post-entrega
+
+### Frontera de mensajería en salas grupales
+Desde una sesión de sala grupal compartida (`C-Level`), Orca restringe `orca orchestration send --to bot:<nombre>` exclusivamente a miembros actuales de esa sala. Cuando Subdirección deba mensajear directamente a bots especialistas fuera de `C-Level`, la coordinación debe ejecutarse desde su Home Chat standalone (o sala operativa dedicada).
+
+### Despacho y enlace de workers remotos (`--on <host>`)
+Al despachar workers remotos sobre nodos secundarios con `orca orchestration worker-start --on <host>`, se debe omitir `--item <n>` (y `--environment`) en el comando de arranque. El vínculo con el Item se realiza inmediatamente después en el nodo coordinador ejecutando:
+```text
+orca bot item link <n> dispatch:<id>
+```
+
+### Higiene y política de artefactos efímeros (`.atl/`)
+Tras la integración y cierre del Item, la higiene del worktree (`Workspace cleanup`) se ejecuta bajo las 4 salvaguardas estrictas ([ROLES.md](ROLES.md)). Si existen carpetas efímeras no versionadas generadas por herramientas de sesión (`.atl/`), pueden descartarse **únicamente** cuando se verifiquen simultáneamente: rama integrada en base con PR cerrado/mergeado, `0` cambios locales fuera de `.atl/`, `0` commits pendientes de push, `0` agentes abiertos o `idle`, `0` Items activos y confirmación de que el worktree no corresponde a un checkout canónico de lectura de una automatización vigente.

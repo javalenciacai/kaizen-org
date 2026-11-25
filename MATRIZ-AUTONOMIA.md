@@ -1,7 +1,7 @@
-# Matriz de Autonomía de kaizen-org (v0.2)
+# Matriz de Autonomía de kaizen-org (v0.3)
 
 > **Estado:** Vigente (Bloques A y B ACTIVOS; Bloque C bajo autorización explícita del Owner)
-> **Fecha de ratificación:** `2026-11-25` (registrada en [decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md](decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md))
+> **Fecha de ratificación:** `2026-11-25` (registrada en [decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md](decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md) y [decisiones/0003-ejecucion-fase2-especialistas-y-reglas-orca.md](decisiones/0003-ejecucion-fase2-especialistas-y-reglas-orca.md))
 
 Esta matriz define con precisión qué ejecuta `kaizen-org` de forma autónoma (**Bloques A y B ACTIVOS** bajo compuertas deterministas y validación ciega estricta) y qué permanece **100% sujeto a aprobación explícita del Owner** mediante un Item en `Needs you` (**Bloque C**).
 

@@ -55,7 +55,7 @@ Cada entrega cerrada alimenta el bucle **Kaizen por excepción**: micro-retrospe
 
 ### Verificación determinista (`scripts/`)
 
-- [scripts/check_kaizen.py](scripts/check_kaizen.py) — Verificador determinista multiplataforma (`python3 scripts/check_kaizen.py`) que opera exclusivamente sobre `git ls-files` y `git log`: valida `UTF-8`/`LF`, límite de [CONSTITUCION.md](CONSTITUCION.md), Línea Canónica de [plantillas/veredicto.md](plantillas/veredicto.md), frontera estricta de repositorio público y 100% de enlaces Markdown relativos.
+- [scripts/check_kaizen.py](scripts/check_kaizen.py) — Verificador determinista multiplataforma (`python3 scripts/check_kaizen.py`) que opera exclusivamente sobre `git ls-files` y parches completos en `git log -p --full-history`: valida `UTF-8`/`LF`, límite de [CONSTITUCION.md](CONSTITUCION.md), Línea Canónica de [plantillas/veredicto.md](plantillas/veredicto.md), frontera estricta de repositorio público y 100% de enlaces Markdown relativos.
 
 ### Plantillas operativas (`plantillas/`)
 
@@ -70,6 +70,7 @@ Cada entrega cerrada alimenta el bucle **Kaizen por excepción**: micro-retrospe
 - [decisiones/INDICE.md](decisiones/INDICE.md) — Tabla índice de registros de decisión (ADRs).
 - [decisiones/0001-fundacion-kaizen-org.md](decisiones/0001-fundacion-kaizen-org.md) — ADR 0001: Fundación de `kaizen-org`, herencia metodológica y descartes de raíz.
 - [decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md](decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md) — ADR 0002: Ratificación de perfiles directivos, Bloque B activo, publicación pública, `scripts/check_kaizen.py` e inicio de Fase 2.
+- [decisiones/0003-ejecucion-fase2-especialistas-y-reglas-orca.md](decisiones/0003-ejecucion-fase2-especialistas-y-reglas-orca.md) — ADR 0003: Ejecución de Fase 2, activación de especialistas bajo Bloque C, reglas de Orca (salas grupales, workers remotos), política `.atl/` y endurecimiento de `check_kaizen.py`.
 
 ### Perfiles `SOUL.md` (`perfiles-propuestos/`)
 
@@ -80,17 +81,18 @@ Cada entrega cerrada alimenta el bucle **Kaizen por excepción**: micro-retrospe
 - [perfiles-propuestos/director-general-SOUL.md](perfiles-propuestos/director-general-SOUL.md) — Perfil `SOUL.md` vigente para `bot:Director General`.
 - [perfiles-propuestos/subdirector-1-SOUL.md](perfiles-propuestos/subdirector-1-SOUL.md) — Perfil `SOUL.md` vigente para `bot:Subdirector 1`.
 
-#### Propuestas Fase 2 para Especialistas (pendientes de aprobación del Owner bajo Bloque C)
+#### Perfiles vigentes de especialistas (ratificados bajo Bloque C el `2026-11-25`)
 
-- [perfiles-propuestos/especialistas-fase2/infra-linux-SOUL.md](perfiles-propuestos/especialistas-fase2/infra-linux-SOUL.md) — Propuesta Fase 2 para `Infra VM-Oracle` (`local`).
-- [perfiles-propuestos/especialistas-fase2/infra-windows-SOUL.md](perfiles-propuestos/especialistas-fase2/infra-windows-SOUL.md) — Propuesta Fase 2 para `Infra Local Windows` (`windows-local`).
-- [perfiles-propuestos/especialistas-fase2/pull-request-review-SOUL.md](perfiles-propuestos/especialistas-fase2/pull-request-review-SOUL.md) — Propuesta Fase 2 para `Pull request review`.
-- [perfiles-propuestos/especialistas-fase2/workspace-cleanup-SOUL.md](perfiles-propuestos/especialistas-fase2/workspace-cleanup-SOUL.md) — Propuesta Fase 2 para `Workspace cleanup` (`local` y `windows-local`).
+- [perfiles-propuestos/especialistas-fase2/infra-linux-SOUL.md](perfiles-propuestos/especialistas-fase2/infra-linux-SOUL.md) — Perfil vigente para `Infra VM-Oracle` (`local`).
+- [perfiles-propuestos/especialistas-fase2/infra-windows-SOUL.md](perfiles-propuestos/especialistas-fase2/infra-windows-SOUL.md) — Perfil vigente para `Infra Local Windows` (`windows-local`).
+- [perfiles-propuestos/especialistas-fase2/pull-request-review-SOUL.md](perfiles-propuestos/especialistas-fase2/pull-request-review-SOUL.md) — Perfil vigente para `Pull request review` (GitHub y Azure DevOps).
+- [perfiles-propuestos/especialistas-fase2/workspace-cleanup-SOUL.md](perfiles-propuestos/especialistas-fase2/workspace-cleanup-SOUL.md) — Perfil vigente para `Workspace cleanup` (`local` y `windows-local`).
 
 ## Reglas técnicas de repositorio y validación
 
 - **Bootstrap compatible (Git <2.28):** inicializar repositorios nuevos con `git init && git symbolic-ref HEAD refs/heads/main`.
-- **Verificación determinista obligatoria:** ejecutar `python3 scripts/check_kaizen.py` antes y después de cada commit; audita exclusivamente `git ls-files` y `git log` sin dependencias POSIX.
+- **Fin de línea en Windows:** configurar `git config --global core.autocrlf input` en `windows-local` para garantizar normalización estricta a `LF` puro.
+- **Verificación determinista obligatoria:** ejecutar `python3 scripts/check_kaizen.py` antes y después de cada commit; audita exclusivamente `git ls-files` y parches completos en `git log -p --full-history` sin dependencias POSIX.
 
 ## Guía rápida: ciclo de vida de un encargo
 

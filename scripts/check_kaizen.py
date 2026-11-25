@@ -50,6 +50,9 @@ BOUNDARY_RULES: List[Tuple[str, Pattern[str]]] = [
             + r"|"
             + "bot-"
             + "group-member"
+            + r"|\b"
+            + "struct"
+            + "worker_"
             + r"|\b(?:"
             + "msg"
             + r"|"
@@ -222,11 +225,45 @@ def check_markdown_links(
     return checked, violations
 
 
+def run_in_memory_tests() -> None:
+    synthetic_samples: List[Tuple[str, str]] = [
+        ("orca_internal_handle", "struct" + "worker_" + "abcdef01"),
+        ("private_posix_path", "/" + "home/" + "user/secret"),
+        ("private_windows_path", "C:" + "\\Users\\secret"),
+        ("uuid", "12345678-1234-1234-1234-" + "123456789abc"),
+        ("secret_or_token", "gh" + "p_" + "12345678901234567890"),
+        ("secret_or_token", "sk-" + "abcdef12345678"),
+    ]
+    for expected_rule, sample in synthetic_samples:
+        file_violations = scan_boundary_text("synthetic-file", f"dummy line\n{sample}\n")
+        if not any(f"[boundary:{expected_rule}]" in v for v in file_violations):
+            raise AssertionError(
+                f"In-memory test failed: {expected_rule} not detected in file text for {sample!r}"
+            )
+
+        patch_sim = (
+            f"diff --git a/test.txt b/test.txt\n"
+            f"--- a/test.txt\n"
+            f"+++ b/test.txt\n"
+            f"@@ -1,1 +1,1 @@\n"
+            f"+leak: {sample}\n"
+        )
+        patch_violations = scan_boundary_text("git-log-patches", patch_sim)
+        if not any(f"[boundary:{expected_rule}]" in v for v in patch_violations):
+            raise AssertionError(
+                f"In-memory test failed: {expected_rule} not detected in patch text for {sample!r}"
+            )
+
+
 def main() -> int:
     try:
+        run_in_memory_tests()
+        if "--test" in sys.argv:
+            print("PASS: in-memory unit tests verified boundary detection for synthetic samples.")
+            return 0
         repo_root = get_repo_root()
         tracked_files = list_tracked_files(repo_root)
-    except RuntimeError as exc:
+    except Exception as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         return 1
 
@@ -278,7 +315,7 @@ def main() -> int:
                 f"[verdict:line2] {verdict_path}:2 must be blank by default, got {actual_l2!r}"
             )
 
-    # (d) Public repository boundary on all tracked files and complete git log.
+    # (d) Public repository boundary on all tracked files and complete git log with patches.
     for rel_path, text in decoded_files.items():
         violations.extend(scan_boundary_text(rel_path, text))
 
@@ -289,6 +326,14 @@ def main() -> int:
         violations.append(f"[gitlog:utf8] git log output is not valid UTF-8: {exc}")
         git_log_text = git_log_raw.decode("utf-8", errors="replace")
     violations.extend(scan_boundary_text("git-log", git_log_text))
+
+    git_patches_raw = run_git(repo_root, ["log", "-p", "--full-history"])
+    try:
+        git_patches_text = git_patches_raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        violations.append(f"[gitlog:utf8] git log -p output is not valid UTF-8: {exc}")
+        git_patches_text = git_patches_raw.decode("utf-8", errors="replace")
+    violations.extend(scan_boundary_text("git-log-patches", git_patches_text))
 
     # (e) Relative Markdown links across all tracked .md files.
     total_links = 0

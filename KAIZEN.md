@@ -57,9 +57,23 @@ El Ciclo de Gobierno Kaizen **no se dispara por calendario ciego**, sino únicam
 
 ---
 
-## Reglas técnicas institucionalizadas (Micro-retrospectiva Fase 1 → v0.2)
+## Reglas técnicas institucionalizadas
+
+### Micro-retrospectiva Fase 1 → v0.2.0
 
 Las siguientes reglas nacen de fricciones reales verificadas en el cierre de Fase 1 ([decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md](decisiones/0002-activacion-perfiles-bloque-b-y-fase2.md)) y son de aplicación obligatoria en `local` y `windows-local`:
 
 1. **Bootstrap Git compatible con Git <2.28:** inicializar repositorios nuevos con `git init && git symbolic-ref HEAD refs/heads/main` (en lugar de `git init -b main`) para garantizar compatibilidad en nodos con versiones antiguas de Git.
 2. **Auditoría determinista de frontera sobre `git ls-files` + `git log`:** toda verificación automática de higiene (`UTF-8` + `LF`), integridad documental y frontera de publicación pública opera **exclusivamente** sobre `git ls-files` y `git log` —nunca recorriendo `.git` con `os.walk` ni dependiendo de `/proc` o módulos exclusivos de POSIX como `pwd`—. El verificador estándar de referencia es [scripts/check_kaizen.py](scripts/check_kaizen.py) (`python3 scripts/check_kaizen.py`).
+
+### Micro-retrospectiva Fase 2 → v0.3.0
+
+Como ejemplo real de convergencia del bucle Kaizen durante la ejecución de Fase 2 ([decisiones/0003-ejecucion-fase2-especialistas-y-reglas-orca.md](decisiones/0003-ejecucion-fase2-especialistas-y-reglas-orca.md)), se institucionalizan las siguientes reglas técnicas:
+
+3. **Frontera de mensajería en salas grupales y enlace de workers remotos (`--on <host>`):**
+   - Desde salas grupales compartidas (`C-Level`), Orca restringe la mensajería directa `orca orchestration send --to bot:<nombre>` exclusivamente a los miembros de dicha sala; la coordinación con especialistas externos se realiza desde el Home Chat standalone de Subdirección (o sala operativa dedicada).
+   - Al despachar workers remotos (`worker-start --on <host>`), se omite `--item` y `--environment`, enlazando el despacho devuelto inmediatamente en el nodo local con `orca bot item link <n> dispatch:<id>`.
+4. **Política de artefactos efímeros descartables (`.atl/`) en limpieza de worktrees:**
+   - La eliminación de directorios efímeros de sesión (`.atl/`) en limpiezas supervisadas queda estrictamente condicionada al cumplimiento simultáneo de las salvaguardas de [ROLES.md](ROLES.md): rama integrada en base con PR cerrado/mergeado, `0` cambios locales fuera de `.atl/`, `0` commits pendientes de push, `0` agentes abiertos o `idle`, `0` Items activos y comprobación de que el worktree no corresponde a un checkout canónico de lectura de una automatización vigente.
+5. **Auditoría profunda de parches históricos y handles de workers estructurados en `check_kaizen.py`:**
+   - [scripts/check_kaizen.py](scripts/check_kaizen.py) se refuerza con la inspección obligatoria de parches completos (`git log -p --full-history`) para detectar cualquier fuga histórica intermedia antes de publicación pública, y se amplía el patrón `orca_internal_handle` para interceptar identificadores de workers estructurados.
